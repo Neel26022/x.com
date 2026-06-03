@@ -13,6 +13,7 @@ export interface IUser extends Document {
     websiteUrl?: string;
     comments: Types.ObjectId[];
     posts: Types.ObjectId[];
+    refreshToken: string;
 }
 
 const userSchema = new Schema<IUser>({
@@ -60,7 +61,10 @@ const userSchema = new Schema<IUser>({
     posts: [{
         type: Schema.Types.ObjectId,
         ref: 'Tweet' 
-    }]
+    }],
+    refreshToken: {
+        type: String
+    }
 }, {
     timestamps: true 
 });
