@@ -1,14 +1,12 @@
 import { Router } from "express";
-import { createTweet } from "../controllers/tweet.js";
+import { createTweet, showTweet } from "../controllers/tweet.js";
 import auth from "../middleware/auth.js";
 
 const tweetRouter = Router()
 
 
-tweetRouter.get('/', (req, res) => {
-    
-})
+tweetRouter.get('/',auth,showTweet)
 
-tweetRouter.post("/", auth, createTweet);
+tweetRouter.post("/create-tweeet", auth, createTweet);
 
 export default tweetRouter

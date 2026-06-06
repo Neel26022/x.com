@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { Login, Signup } from "../controllers/user.js"
+import { generateAccessToken, login, signup } from "../controllers/user.js"
 const userRouter = Router()
 
-userRouter.post('/signup', Signup)
-userRouter.post('/signin', Login)
+userRouter.post('/signup', signup)
+userRouter.post('/signin', login)
+userRouter.post('/access-token',generateAccessToken)
 
 export default userRouter

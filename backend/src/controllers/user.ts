@@ -9,7 +9,7 @@ interface ISignupBody {
     name: string;
 }
 
-const Signup = async (req: Request, res: Response): Promise<Response> => {
+const signup = async (req: Request, res: Response): Promise<Response> => {
 
     try {
         const { username, password, name } = req.body as ISignupBody;
@@ -54,7 +54,7 @@ interface ILogin {
     password: string;
 }
 
-const   Login = async (req: Request,res: Response): Promise<Response> => {
+const login = async (req: Request,res: Response): Promise<Response> => {
 
     const { username, password } = req.body as ILogin
 
@@ -131,7 +131,56 @@ const   Login = async (req: Request,res: Response): Promise<Response> => {
     }
 }
 
+const generateAccessToken =  async (req: Request,res: Response) => {
+    const refreshToken = req.cookies.refreshToken
+
+    if(!refreshToken) {
+        return res.redirect('/user/login')
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET!)
+
+    if(!decoded) {
+        return res.redirect('/user/login')
+    }
+
+    try {
+
+        const user = await User.findOne({
+            refreshToken: refreshToken
+        })
+
+        if(!user) {
+            return res.status(400).json({
+                message: "Invalid User"
+            })
+        }
+
+        const accessToken = jwt.sign(user._id, process.env.JWT_SECRET!, {expiresIn: '1h'})
+
+        if(!accessToken) {
+            return res.status(500).json({
+            message: "JWT secrets not configured",
+            });
+        }
+
+        res.cookie('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 60 * 1000, // 1 hour
+        })
+
+    } catch (e) {
+        res.status(500).json({
+            message: "Internal Server Error"
+        })
+    }
+
+}
+
 export  {
-    Signup,
-    Login
+    signup,
+    login,
+    generateAccessToken
 }
