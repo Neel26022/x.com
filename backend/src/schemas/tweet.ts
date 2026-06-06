@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 
-export interface ITweet extends Document {
+interface ITweet extends Document {
     userId: Types.ObjectId;
     title: string;
     bookmark: boolean;
