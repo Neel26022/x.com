@@ -54,7 +54,7 @@ interface ILogin {
     password: string;
 }
 
-export const Login = async (req: Request,res: Response): Promise<Response> => {
+const   Login = async (req: Request,res: Response): Promise<Response> => {
 
     const { username, password } = req.body as ILogin
 
@@ -131,7 +131,7 @@ export const Login = async (req: Request,res: Response): Promise<Response> => {
     }
 }
 
-export default {
+export  {
     Signup,
     Login
 }
