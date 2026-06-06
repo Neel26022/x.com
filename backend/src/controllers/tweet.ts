@@ -53,8 +53,22 @@ const createTweet = async (req: Request, res: Response) => {
 };
 
 
-const showTweet = (req: Request, res: Response) => {
-    res.send("Create Tweet")
+const showTweet = async (req: Request, res: Response) => {
+    try {
+        const tweets = await Tweet.find({});
+
+        return res.status(200).json({
+            message: "Tweets found successfully",
+            count: tweets.length,
+            data: tweets,
+        });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Internal Server Error",
+        })
+    }
 }
 
 export {
