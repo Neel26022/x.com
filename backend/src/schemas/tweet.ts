@@ -6,6 +6,7 @@ interface ITweet extends Document {
     bookmark: boolean;
     description: string;
     image?: string; 
+    views: number;
 }
 
 const tweetSchema = new Schema<ITweet>({
@@ -28,6 +29,10 @@ const tweetSchema = new Schema<ITweet>({
     },
     image: {
         type: String
+    },
+    views: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true 

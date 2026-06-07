@@ -17,8 +17,10 @@ const likeSchema = new mongoose.Schema<Ilike>({
         ref: 'Tweet',
         required: true 
     },
+}, {
+    timestamps: true 
 })
 
-const Like = mongoose.Model<Ilike>('Like', likeSchema)
+const Like = mongoose.model<Ilike>('Like', likeSchema)
 
 export default Like

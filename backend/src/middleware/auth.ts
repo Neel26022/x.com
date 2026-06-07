@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import type { NextFunction, Request, Response } from "express";
 
 const auth = (req:Request, res:Response, next: NextFunction) => {
-
+    console.log("heello")
     if(!process.env.JWT_SECRET || !process.env.REFRESH_SECRET) {
         return res.status(400).json({
             message: "Not find the jwt secret and refresh secret"
@@ -10,6 +10,7 @@ const auth = (req:Request, res:Response, next: NextFunction) => {
     }
 
     const token = req.cookies.accessToken
+    console.log("eeee",token)
     const refreshToken = req.cookies.refreshToken
 
     if (!token) {
@@ -29,12 +30,13 @@ const auth = (req:Request, res:Response, next: NextFunction) => {
     try {
         const decoded = jwt.verify(
             token,
-            process.env.ACCESS_SECRET!
+            process.env.JWT_SECRET!
         );
 
-        req.user = decoded;
+        req.user = decoded
         next();
     } catch (err) {
+        console.error(err)
         return res.status(401).json({
             message: "Invalid Token"
         });

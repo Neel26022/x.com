@@ -6,6 +6,7 @@ export interface IComment extends Document {
     tweetId: Types.ObjectId;
     message: string;
     likes: Types.ObjectId[];
+    replay: Types.ObjectId[];
 }
 
 const commentSchema = new Schema<IComment>({
@@ -24,8 +25,12 @@ const commentSchema = new Schema<IComment>({
         required: true
     }, 
     likes: [{
+        type: Number,
+        default: 0
+    }],
+    replay: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Replay'
     }]
 }, {
     timestamps: true 
