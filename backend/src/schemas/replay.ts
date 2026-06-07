@@ -1,19 +1,25 @@
 import mongoose, { Types, Document, Schema } from "mongoose"
 
 interface IReplay extends Document {
-    tweetID: Types.ObjectId;
-    userID: Types.ObjectId;
+    tweetId: Types.ObjectId;
+    commentId: Types.ObjectId;
+    userId: Types.ObjectId;
     text: String;
     like: Number;
 }
 
 const replaySchema= new mongoose.Schema<IReplay>({
-    tweetID:  {
+    tweetId:  {
         type: Schema.Types.ObjectId,
         ref: "Tweet",
         required: true
     },
-    userID: {
+    commentId: {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+        required: true
+    },
+    userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true

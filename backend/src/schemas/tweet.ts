@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
+import { showComment } from "../controllers/comment.js";
 
 interface ITweet extends Document {
     userId: Types.ObjectId;
@@ -7,6 +8,7 @@ interface ITweet extends Document {
     description: string;
     image?: string; 
     views: number;
+    replay: Types.ObjectId[];
 }
 
 const tweetSchema = new Schema<ITweet>({
@@ -33,7 +35,11 @@ const tweetSchema = new Schema<ITweet>({
     views: {
         type: Number,
         default: 0
-    }
+    }, 
+    replay: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Replay'
+    }]
 }, {
     timestamps: true 
 });

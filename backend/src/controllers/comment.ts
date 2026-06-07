@@ -30,7 +30,7 @@ const createComment = async (req:Request,res:Response) => {
 
         res.status(201).json({
             message: "Comment created successfully",
-            comment
+            data: comment
         })
     }
     catch (err) {   
@@ -41,6 +41,42 @@ const createComment = async (req:Request,res:Response) => {
     }
 }
 
+const showComment = async (req:Request,res:Response) => {
+    const tweetId = req.params.tweetId
+    
+    try {
+
+        if(!tweetId) {
+            return res.status(400).json({
+                message: "Tweet Id is not find"
+            })
+        }
+
+        const comment = await Comment.find({
+            tweetId: tweetId
+        })
+
+        if(!comment) {
+            return res.status(400).json({
+                message: "Not find any comment."
+            })
+        }
+
+        res.status(200).json({
+            message: "Comments find.",
+            data: comment
+        })
+        
+    } catch(e) {
+        console.error(e)
+        res.status(500).json({
+            message: "Internal Server Error"
+        })
+    }
+
+} 
+
 export {
-    createComment
+    createComment,
+    showComment
 }
