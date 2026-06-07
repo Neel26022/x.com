@@ -14,6 +14,7 @@ export interface IUser extends Document {
     comments: Types.ObjectId[];
     posts: Types.ObjectId[];
     refreshToken: string;
+    bookmark: Types.ObjectId[];
 }
 
 const userSchema = new Schema<IUser>({
@@ -64,7 +65,11 @@ const userSchema = new Schema<IUser>({
     }],
     refreshToken: {
         type: String
-    }
+    }, 
+    bookmark: [{
+        type: Schema.Types.ObjectId,
+        ref: 'BookMark'
+    }]
 }, {
     timestamps: true 
 });

@@ -4,7 +4,6 @@ import { showComment } from "../controllers/comment.js";
 interface ITweet extends Document {
     userId: Types.ObjectId;
     title: string;
-    bookmark: boolean;
     description: string;
     image?: string; 
     views: number;
@@ -20,10 +19,6 @@ const tweetSchema = new Schema<ITweet>({
     title: {
         type: String,
         required: true 
-    },
-    bookmark: {
-        type: Boolean,
-        default: false
     },
     description: { 
         type: String,
